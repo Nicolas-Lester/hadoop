@@ -1,6 +1,0 @@
-# Ignorar archivos CSV grandes
-*.csv
-*.csv.zip
-
-# Pero trackear este .gitignore
-!.gitignore
