@@ -20,4 +20,4 @@ for line in sys.stdin:
 
 # Emitir los resultados ordenados por semana
 for week in sorted(week_counts.keys()):
-    print(f"{week}\t{week_counts[week]}")
+    print("{}\t{}".format(week, week_counts[week]))

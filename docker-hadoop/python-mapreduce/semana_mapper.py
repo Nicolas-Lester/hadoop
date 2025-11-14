@@ -9,19 +9,19 @@ from datetime import datetime
 for line in sys.stdin:
     line = line.strip()
     
-    # Saltar la cabecera
-    if line.startswith('event_time'):
+    # Saltar la cabecera y líneas vacías
+    if not line or line.startswith('event_time'):
         continue
     
     try:
-        fields = line.split(',')
+        parts = line.split(',')
         
         # Verificar que hay suficientes campos
-        if len(fields) < 2:
+        if len(parts) < 9:
             continue
         
-        event_time = fields[0]  # event_time
-        event_type = fields[1]  # event_type
+        event_time = parts[0]  # event_time
+        event_type = parts[1]  # event_type
         
         # Solo eventos "cart"
         if event_type == 'cart':
@@ -35,8 +35,8 @@ for line in sys.stdin:
             year = date.year
             week = date.isocalendar()[1]  # Número de semana ISO
             
-            week_label = f"{year}-W{week:02d}"
-            print(f"{week_label}\t1")
+            week_label = "{}-W{:02d}".format(year, week)
+            print("{}\t1".format(week_label))
             
     except Exception:
         # Ignorar líneas con errores

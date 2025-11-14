@@ -8,23 +8,24 @@ import sys
 for line in sys.stdin:
     line = line.strip()
     
-    # Saltar la cabecera
-    if line.startswith('event_time'):
+    # Saltar la cabecera y líneas vacías
+    if not line or line.startswith('event_time'):
         continue
     
     try:
-        fields = line.split(',')
+        # Split simple por coma (suficiente para este caso)
+        parts = line.split(',')
         
-        # Verificar que hay suficientes campos
-        if len(fields) < 3:
+        # Verificar que hay al menos los campos necesarios
+        if len(parts) < 9:
             continue
         
-        event_type = fields[1]  # event_type
-        product_id = fields[2]  # product_id
+        event_type = parts[1]  # event_type
+        product_id = parts[2]  # product_id
         
-        # Solo eventos "view"
-        if event_type == 'view':
-            print(f"{product_id}\t1")
+        # Solo eventos "view" con product_id válido
+        if event_type == 'view' and product_id:
+            print("{}\t1".format(product_id))
             
     except Exception:
         # Ignorar líneas con errores

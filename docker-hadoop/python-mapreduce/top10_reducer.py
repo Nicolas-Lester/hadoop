@@ -23,4 +23,4 @@ top_10 = sorted(product_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
 # Emitir los resultados
 for product_id, count in top_10:
-    print(f"{product_id}\t{count}")
+    print("{}\t{}".format(product_id, count))

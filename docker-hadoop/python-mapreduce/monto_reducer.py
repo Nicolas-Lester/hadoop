@@ -20,4 +20,4 @@ for line in sys.stdin:
 
 # Emitir los resultados
 for user_id, total in user_totals.items():
-    print(f"{user_id}\t{total:.2f}")
+    print("{}\t{:.2f}".format(user_id, total))
