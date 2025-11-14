@@ -21,6 +21,6 @@ for line in sys.stdin:
 # Ordenar por cantidad (descendente) y tomar top 10
 top_10 = sorted(product_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
-# Emitir los resultados
+# Emitir solo los datos (sin encabezados que rompen el formato de Hadoop)
 for product_id, count in top_10:
     print("{}\t{}".format(product_id, count))

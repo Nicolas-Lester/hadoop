@@ -1,4 +1,4 @@
-# 🐘 Proyecto Hadoop con Docker - Análisis de E-commerce
+# 🐘 Proyecto Hadoop con Docker - 
 
 Proyecto de Big Data que implementa un cluster de Hadoop usando Docker para analizar datos de comportamiento de usuarios en un sitio de e-commerce mediante MapReduce con Python.
 
@@ -37,8 +37,16 @@ docker ps
 # 1. Copia el CSV al contenedor namenode (asegúrate de tener el archivo en esta carpeta)
 docker cp 2019-Oct.csv namenode:/tmp/2019-Oct.csv
 
+#verfica si el archivo esta en el contenedor
+docker exec namenode ls -lh /tmp/ | findstr "2019-Oct"
+docker exec namenode ls -lh /tmp/2019-Oct.csv
+
+#en caso de, crear el directorio /tmp
+docker exec namenode hadoop fs -mkdir -p /tmp
+
 # 2. Sube el archivo a HDFS (esto tarda unos minutos por el tamaño)
 docker exec namenode hadoop fs -put /tmp/2019-Oct.csv /tmp/2019-Oct.csv
+
 
 # 3. Verifica que se subió correctamente
 docker exec -it namenode hadoop fs -ls /tmp/
@@ -51,6 +59,7 @@ docker exec -it namenode hadoop fs -ls /tmp/
 ```powershell
 # Copia la carpeta python-mapreduce al contenedor
 docker cp python-mapreduce namenode:/opt/hadoop-3.2.1/
+docker cp python-mapreduce/. namenode:/opt/hadoop-3.2.1/python-mapreduce/
 ```
 
 ### 🔬 PASO 4: Ejecutar los 3 Análisis de MapReduce
@@ -67,6 +76,14 @@ docker exec -it nodemanager bash -c "echo 'deb http://archive.debian.org/debian 
 y por si no esta en otro contenedores
 
 docker exec -it datanode bash -c "echo 'deb http://archive.debian.org/debian stretch main' > /etc/apt/sources.list && apt-get update -qq ; apt-get install -y -qq python3"
+
+docker exec namenode apt-get install -y python3
+
+docker exec namenode apt-get update
+
+docker exec namenode bash -c "echo 'deb http://archive.debian.org/debian/ stretch main' > /etc/apt/sources.list && echo 'deb http://archive.debian.org/debian-security/ stretch/updates main' >> /etc/apt/sources.list"
+
+docker exec namenode apt-get update -o Acquire::Check-Valid-Until=false
 
 eliminar el directorio de salida si es que ya existe
 docker exec namenode hadoop fs -rm -r /output

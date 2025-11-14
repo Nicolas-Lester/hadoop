@@ -18,6 +18,6 @@ for line in sys.stdin:
     except Exception:
         continue
 
-# Emitir los resultados ordenados por semana
+# Emitir los resultados ordenados por semana (solo datos puros)
 for week in sorted(week_counts.keys()):
     print("{}\t{}".format(week, week_counts[week]))
