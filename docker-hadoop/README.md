@@ -73,11 +73,12 @@ docker exec -it nodemanager bash -c "echo 'deb http://archive.debian.org/debian 
 docker exec -it datanode bash -c "echo 'deb http://archive.debian.org/debian stretch main' > /etc/apt/sources.list && apt-get update -qq ; apt-get install -y -qq python3"
 
 #instalar python en namenode
-docker exec namenode apt-get install -y python3
 docker exec namenode bash -c "echo 'deb http://archive.debian.org/debian/ stretch main' > /etc/apt/sources.list && echo 'deb http://archive.debian.org/debian-security/ stretch/updates main' >> /etc/apt/sources.list"
 
 #Actualizar dependencias
 docker exec namenode apt-get update
+docker exec namenode apt-get install -y python3
+
 
 **📍 Monitorear en**: http://localhost:8088
 
@@ -135,8 +136,6 @@ docker-compose down
 # Si quieres eliminar TODOS los datos (volúmenes)
 docker-compose down -v
 ```
-## elimina todo el volumen en caso de empezar de nuevo
-cd "C:\Users\nicol\Desktop\4 año 2025\2 Semestre\Big Data\Unidad 3 Proyectos Big Data\hadoop\docker-hadoop" ; docker-compose down -v
 
 #elimina contenedores antiguos
 docker rm -f elastic_curie nifty_napier musing_edison 2>$null ; Write-Host "Contenedores antiguos eliminados"
