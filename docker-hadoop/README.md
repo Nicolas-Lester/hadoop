@@ -34,11 +34,11 @@ docker ps
 ### 📂 PASO 2: Subir el Archivo de Datos a HDFS
 
 ```powershell
-# 1. Copia el CSV al contenedor namenode
+# 1. Copia el CSV al contenedor namenode (asegúrate de tener el archivo en esta carpeta)
 docker cp 2019-Oct.csv namenode:/tmp/2019-Oct.csv
 
 # 2. Sube el archivo a HDFS (esto tarda unos minutos por el tamaño)
-docker exec -it namenode hadoop fs -put /tmp/2019-Oct.csv /tmp/2019-Oct.csv
+docker exec namenode hadoop fs -put /tmp/2019-Oct.csv /tmp/2019-Oct.csv
 
 # 3. Verifica que se subió correctamente
 docker exec -it namenode hadoop fs -ls /tmp/
@@ -60,6 +60,16 @@ docker cp python-mapreduce namenode:/opt/hadoop-3.2.1/
 ```powershell
 docker exec -it namenode bash -c "cd /opt/hadoop-3.2.1/python-mapreduce && hadoop jar /opt/hadoop-3.2.1/share/hadoop/tools/lib/hadoop-streaming-*.jar -files top10_mapper.py,top10_reducer.py -mapper 'python3 top10_mapper.py' -reducer 'python3 top10_reducer.py' -input /tmp/2019-Oct.csv -output /output/top10_productos"
 ```
+por si no esta python
+
+docker exec -it nodemanager bash -c "echo 'deb http://archive.debian.org/debian stretch main' > /etc/apt/sources.list && apt-get update ; apt-get install -y python3"
+
+y por si no esta en otro contenedores
+
+docker exec -it datanode bash -c "echo 'deb http://archive.debian.org/debian stretch main' > /etc/apt/sources.list && apt-get update -qq ; apt-get install -y -qq python3"
+
+eliminar el directorio de salida si es que ya existe
+docker exec namenode hadoop fs -rm -r /output
 
 **⏱️ Tiempo estimado**: 3-5 minutos  
 **📍 Monitorear en**: http://localhost:8088
@@ -468,3 +478,10 @@ Nicolas Lester - Big Data Project 2025
 ## 📝 Licencia
 
 Este proyecto es de código abierto para fines educativos.
+
+## elimina todo el volumen en caso de empezar de nuevo
+cd "C:\Users\nicol\Desktop\4 año 2025\2 Semestre\Big Data\Unidad 3 Proyectos Big Data\hadoop\docker-hadoop" ; docker-compose down -v
+
+docker ps -a | findstr "namenode datanode resourcemanager"cd c
+
+docker rm -f elastic_curie nifty_napier musing_edison 2>$null ; Write-Host "Contenedores antiguos eliminados"
