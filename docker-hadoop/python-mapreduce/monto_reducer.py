@@ -18,6 +18,8 @@ for line in sys.stdin:
     except Exception:
         continue
 
-# Emitir los resultados
-for user_id, total in user_totals.items():
+# Ordenar por monto (descendente) y emitir solo datos
+sorted_users = sorted(user_totals.items(), key=lambda x: x[1], reverse=True)
+
+for user_id, total in sorted_users:
     print("{}\t{:.2f}".format(user_id, total))
