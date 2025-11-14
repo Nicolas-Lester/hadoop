@@ -1,0 +1,13 @@
+# Archivos grandes de datos
+2019-Oct.csv
+*.csv
+
+# Resultados generados
+top10_productos.txt
+monto_cliente.txt
+articulos_semana.txt
+*_formatted.txt
+
+# Archivos temporales
+*.log
+*.tmp
